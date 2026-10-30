@@ -1,0 +1,3 @@
+package cn.kaoyan.assistant;
+import java.util.concurrent.*;
+public class PreviewQueueTest {public static void main(String[] args)throws Exception{WorkQueues q=new WorkQueues();CountDownLatch importing=new CountDownLatch(1),release=new CountDownLatch(1),previewed=new CountDownLatch(1);try{q.files.submit(()->{importing.countDown();try{release.await();}catch(InterruptedException ignored){}});if(!importing.await(2,TimeUnit.SECONDS))throw new AssertionError("import not started");q.preview.submit(previewed::countDown);if(!previewed.await(500,TimeUnit.MILLISECONDS))throw new AssertionError("PDF preview blocked by large-file copy");System.out.println("PDF preview work remains independent of file import");}finally{release.countDown();q.close();}}}

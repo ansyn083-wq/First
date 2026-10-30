@@ -1,0 +1,23 @@
+RUN compact-mobile-ui.mjs 
+Compact mobile navigation, secondary routes, subject heading, AI entry passed
+RUN english-providers-ui.mjs 
+English providers DOM passed: single binding, late-result isolation, memo units, no token in state, import, custom limits and rollback
+RUN local-options-ui.mjs 
+Local choices DOM passed: first-open, undecided persistence/reload, save rollback, isolated board settings, icons, major search/add/switch and independent courses
+RUN optimization-ui.mjs 
+DOM integration passed: 200-file pagination/debounce, page cache/resume, contextual AI, note save/history, batch types and undo.
+RUN subjects-ui.mjs 
+Subject DOM passed: migration, subjects/types/tracks/courses, original PDF, concurrency3, manual routing, custom profession, words, scan fallback, unified import and legacy folders
+RUN repair-ui.mjs 
+Repair DOM PASS: both restores succeed/rollback, configured home progress, API host guard, partial postpone, cancel repeat
+RUN local-options-review-ui.mjs focus
+Review DOM passed: focus
+RUN local-options-review-ui.mjs course
+Review DOM passed: course
+RUN local-options-review-ui.mjs escaping
+Review DOM passed: escaping
+RUN local-options-review-ui.mjs save
+Review DOM passed: save
+RUN local-options-review-ui.mjs direct
+Review DOM passed: direct
+DOM suites passed: 11

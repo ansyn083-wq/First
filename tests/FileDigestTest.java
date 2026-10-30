@@ -1,0 +1,3 @@
+package cn.kaoyan.assistant;
+import java.io.*;import java.nio.file.*;
+public class FileDigestTest {public static void main(String[] args)throws Exception{File f=File.createTempFile("digest-",".txt");try{Files.write(f.toPath(),"abc".getBytes("UTF-8"));if(!FileDigest.sha256(f).equals("ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"))throw new AssertionError("wrong full-file hash");Files.write(f.toPath(),"abd".getBytes("UTF-8"));if(FileDigest.sha256(f).equals("ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"))throw new AssertionError("same size different bytes");}finally{f.delete();}System.out.println("FileDigest verified");}}

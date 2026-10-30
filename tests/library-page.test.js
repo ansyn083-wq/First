@@ -1,0 +1,2 @@
+const {test}=require('node:test'),a=require('node:assert/strict'),L=require('../app/src/main/assets/library-core');
+test('large library page renders at most 60 records, clamps pages and retains original index',()=>{a.equal(typeof L.page,'function');const rows=Array.from({length:10000},(_,i)=>({id:''+i}));let p=L.page(rows,3,60);a.equal(p.items.length,60);a.equal(p.items[0].id,'180');a.equal(p.start,180);a.equal(p.totalPages,167);p=L.page(rows,999,60);a.equal(p.page,166);a.equal(p.items.length,40);a.deepEqual(L.page([],5,60).items,[])});

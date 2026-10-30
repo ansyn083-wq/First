@@ -1,0 +1,10 @@
+{
+	"private": true,
+	"scripts": {
+		"test": "node --test tests/*.test.js",
+		"test:dom": "node tests/run-dom-tests.mjs"
+	},
+	"devDependencies": {
+		"happy-dom": "17.4.4"
+	}
+}

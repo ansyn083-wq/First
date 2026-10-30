@@ -1,0 +1,1 @@
+package android.util;import java.io.*;public class AtomicFile{private final File file;public AtomicFile(File file){this.file=file;}public FileInputStream openRead()throws IOException{return new FileInputStream(file);}}

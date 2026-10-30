@@ -1,0 +1,2 @@
+"use strict";
+(()=>{const started=Date.now();let finished=false;window.finishStartup=()=>{if(finished)return;finished=true;const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;setTimeout(()=>{const el=document.getElementById('startup');if(!el)return;el.classList.add('leaving');setTimeout(()=>el.remove(),reduced?0:280);},Math.max(0,(reduced?0:850)-(Date.now()-started)));};setTimeout(window.finishStartup,2500);})();

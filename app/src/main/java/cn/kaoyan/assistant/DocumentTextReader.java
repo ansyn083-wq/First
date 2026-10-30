@@ -1,0 +1,8 @@
+package cn.kaoyan.assistant;
+import java.io.*;import java.util.zip.*;import javax.xml.parsers.*;import org.w3c.dom.*;import org.xml.sax.InputSource;
+final class DocumentTextReader {
+ static String read(File file)throws Exception{
+  try(ZipFile z=new ZipFile(file)){ZipEntry e=z.getEntry("word/document.xml");if(e==null)throw new IOException("DOCX没有正文");ByteArrayOutputStream bytes=new ByteArrayOutputStream();try(InputStream in=z.getInputStream(e)){byte[] b=new byte[8192];int n;while((n=in.read(b))!=-1){if(bytes.size()+n>2*1024*1024)throw new IOException("DOCX正文过大，原件已保存");bytes.write(b,0,n);}}String xml=bytes.toString("UTF-8");if(xml.indexOf(0)>=0||xml.contains("<!DOCTYPE")||xml.contains("<!ENTITY"))throw new IOException("不支持包含实体声明的DOCX");DocumentBuilderFactory factory=DocumentBuilderFactory.newInstance();factory.setNamespaceAware(true);factory.setExpandEntityReferences(false);DocumentBuilder b=factory.newDocumentBuilder();b.setEntityResolver((pub,sys)->new InputSource(new StringReader("")));Document doc=b.parse(new ByteArrayInputStream(bytes.toByteArray()));StringBuilder out=new StringBuilder();append(doc.getDocumentElement(),out);if(out.length()>400000)throw new IOException("DOCX正文过大，原件已保存");return out.toString();}
+ }
+ private static void append(Node node,StringBuilder out)throws IOException{if(out.length()>400000)throw new IOException("DOCX正文过大，原件已保存");String local=node.getLocalName();if("t".equals(local)){out.append(node.getTextContent());return;}if("tab".equals(local)){out.append('\t');return;}if("br".equals(local)||"cr".equals(local)){out.append('\n');return;}NodeList children=node.getChildNodes();for(int i=0;i<children.getLength();i++)append(children.item(i),out);if("p".equals(local))out.append('\n');}
+}

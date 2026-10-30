@@ -1,0 +1,33 @@
+Note: /workspace/scratch/883ebd4a677a/review/yanxu-source-0.15.1/tests/PlanSheetReaderTest.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+Share FIFO, stable IDs, legacy migration, failed disk writes, concurrent acknowledgements and capacity passed
+ShareQueueTest PASS
+ApiKeyPolicyTest PASS: cross-service reuse blocked, replacement and clear supported
+ApiKeyPolicyTest PASS
+StateCodec UTF-8 budget checks passed
+StateCodecTest PASS
+FileDigest verified
+FileDigestTest PASS
+100MiB bounded streaming, complete bytes, SHA256, allowance, integrity and storage checks passed
+AttachmentTransferTest PASS
+PDF raster memory, dimensions and aspect ratio checked
+PageRasterSizeTest PASS
+DOCX paragraphs, whitespace, Chinese and external-entity refusal checks passed
+DocumentTextReaderTest PASS
+XLSX first-sheet, Chinese, sparse-column and entity checks passed
+PlanSheetReaderTest PASS
+Local disk work completes while three concurrent classification workers are blocked
+WorkQueuesTest PASS
+PDF preview work remains independent of file import
+PreviewQueueTest PASS
+Office cache reuse, invalidation and original-preserving cleanup checked
+OfficeCacheTest PASS
+Archive roundtrip, original bytes, unsafe paths rejected
+ArchiveIOTest PASS
+Full backup exact originals, preview isolation, restore, failure rollback and cancellation passed
+FullBackupTest PASS
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+SQLite migration >8MB, preserved legacy, split text roundtrip, no duplicate PDF body, rollback passed
+LearningStoreTest PASS

@@ -1,0 +1,31 @@
+services:
+  office:
+    build: .
+    environment:
+      OFFICE_TOKEN: ${OFFICE_TOKEN:?Set OFFICE_TOKEN in .env}
+    volumes:
+      - jobs:/work
+    networks: [private]
+    read_only: true
+    tmpfs: [/tmp:size=64m]
+    mem_limit: 2g
+    pids_limit: 256
+    restart: unless-stopped
+  gateway:
+    image: caddy:2
+    environment:
+      OFFICE_DOMAIN: ${OFFICE_DOMAIN:?Set OFFICE_DOMAIN in .env}
+    ports: ["80:80", "443:443"]
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    networks: [default, private]
+    restart: unless-stopped
+networks:
+  private:
+    internal: true
+volumes:
+  jobs:
+  caddy-data:
+  caddy-config:

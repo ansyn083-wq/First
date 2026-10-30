@@ -1,0 +1,7 @@
+package cn.kaoyan.assistant;
+import java.io.*;import java.nio.file.*;import java.util.*;import java.util.zip.*;
+public class ArchiveIOTest {
+ public static void main(String[] args)throws Exception{File dir=Files.createTempDirectory("backup-test").toFile(),original=new File(dir,"source.pdf");Files.write(original.toPath(),"原件字节".getBytes("UTF-8"));Map<String,File> files=new LinkedHashMap<>();files.put("x.pdf",original);ByteArrayOutputStream out=new ByteArrayOutputStream();ArchiveIO.write(out,"{\"schema\":1}".getBytes("UTF-8"),files);File stage=new File(dir,"stage");byte[] state=ArchiveIO.stage(new ByteArrayInputStream(out.toByteArray()),stage,()->1000000000L);if(!new String(state,"UTF-8").contains("schema"))throw new AssertionError();if(!Arrays.equals(Files.readAllBytes(original.toPath()),Files.readAllBytes(new File(stage,"attachments/x.pdf").toPath())))throw new AssertionError("original lost");
+ for(String name:new String[]{"../outside","attachments/../outside","attachments/..","evil.json"}){ByteArrayOutputStream bad=new ByteArrayOutputStream();try(ZipOutputStream z=new ZipOutputStream(bad)){z.putNextEntry(new ZipEntry(name));z.write(1);z.closeEntry();}boolean rejected=false;try{ArchiveIO.stage(new ByteArrayInputStream(bad.toByteArray()),new File(dir,"bad"+name.hashCode()),()->1000000000L);}catch(IOException e){rejected=true;}if(!rejected)throw new AssertionError("unsafe entry accepted: "+name);}
+ System.out.println("Archive roundtrip, original bytes, unsafe paths rejected");}
+}
